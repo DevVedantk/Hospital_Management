@@ -13,6 +13,8 @@ export const DashBoard=()=>{
 
        <Navbar/>
 
+       <h1 className="text-3xl font-bold p-6">Good Morning Mr.Vedant Khasbage</h1>
+
        <div className='flex flex-wrap items-center'>
        <PFeatureCard/>
        <PFeatureCard/>

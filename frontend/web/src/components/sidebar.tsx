@@ -31,26 +31,26 @@ export const SideBar=()=>{
              Your Details
             </button>
             <button
-              
+               onClick={()=>navigate("/Patient-history")}
               className={"w-full cursor-pointer flex items-center gap-3 px-4 py-2 text-sm rounded-lg"}
             >
               <FileText className="h-5 w-5" />
              History
             </button>
-            <button
+            <button onClick={()=>navigate("/test-result")}
               className={"w-full cursor-pointer flex items-center gap-3 px-4 py-2 text-sm rounded-lg"}
             >
               <Flask className="h-5 w-5" />
               Test Results
             </button>
             <button
-            
+              onClick={()=>navigate("/Book-appointment")}
               className={"w-full cursor-pointer flex items-center gap-3 px-4 py-2 text-sm rounded-lg "}
             >
               <Calendar className="h-5 w-5" />
              Book Appointment
             </button>
-            <button
+            <button onClick={()=>navigate("/bed-booking")}
              
               className={"w-full cursor-pointer flex items-center gap-3 px-4 py-2 text-sm rounded-lg"}
             >

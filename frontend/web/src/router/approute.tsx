@@ -5,6 +5,9 @@ import { Home } from "../screen/home"
 import { DashBoard } from "../screen/dashboard"
 import { PatientDetail } from "../screen/patientdetails"
 import { EditPatientDetailScreen } from "../screen/EditPatientDetails"
+import { BookAppointment } from "../screen/BookAppointment"
+import { PatientHistory } from "../screen/patientHistory"
+import { BedBooking } from "../screen/bedbooking"
 
 export const AppRoute=()=>{
 
@@ -16,8 +19,10 @@ export const AppRoute=()=>{
        <Route path="/dashboard" element={<DashBoard/>}/>
        <Route path="/Patient-detail" element={<PatientDetail/>}/>
        <Route path="/EditPatient-detail" element={<EditPatientDetailScreen/>}/>
-       <Route path="/Book-appointment" element={<EditPatientDetailScreen/>}/>
-
+       <Route path="/Book-appointment" element={<BookAppointment/>}/>
+       <Route path="/Patient-history" element={<PatientHistory/>}/>
+       <Route path="/test-result" element={<BookAppointment/>}/>
+       <Route path="/bed-booking" element={<BedBooking/>}/>
         </Routes>
     </div>
 }
