@@ -1,10 +1,45 @@
+import axios from 'axios';
 import { User, Calendar, Phone, Mail, MapPin, Heart, Activity, Edit } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+interface datatype{
+  Address :string, 
+Age:string,
+BirthDate:string,
+BloodGroup:string,
+Firstname:string,
+Gender:string,
+Lastname:string,
+MedicalHistory:string,
+MobileNo :string
+email:string
+}
 
 export const ViewPatientDetail=()=>{
+  const [data,setdata]=useState<datatype>({
+    Address: '',
+    Age: '',
+    BirthDate: '',
+    BloodGroup: '',
+    Firstname: '',
+    Gender: '',
+    Lastname: '',
+    MedicalHistory: '',
+    MobileNo: '',
+    email: '',
+  });
 
     const navigate=useNavigate();
+    useEffect(()=>{
+      axios.get("http://localhost:3000/patient/auths",{withCredentials:true}).then((resp)=>{
+        console.log(resp);
+        setdata(resp.data.userData)
+      })
+
+    },[])
+
+    console.log(data);
 
   return (
     <div className="p-8">
@@ -27,7 +62,7 @@ export const ViewPatientDetail=()=>{
               </div>
               <div>
                 <p className="text-sm text-gray-500">Full Name</p>
-                <p className="font-medium text-gray-900">vedant khasbage</p>
+                <p className="font-medium text-gray-900">{data.Firstname===null ? "N/A" :data.Firstname}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -36,7 +71,7 @@ export const ViewPatientDetail=()=>{
               </div>
               <div>
                 <p className="text-sm text-gray-500">Gender</p>
-                <p className="font-medium text-gray-900 capitalize">mael</p>
+                <p className="font-medium text-gray-900 capitalize">{data.Gender===null ? "N/A" :data.Gender}</p>
               </div>
             </div>
           </div>
@@ -48,7 +83,7 @@ export const ViewPatientDetail=()=>{
               </div>
               <div>
                 <p className="text-sm text-gray-500">Date of Birth</p>
-                <p className="font-medium text-gray-900">18/04./2005</p>
+                <p className="font-medium text-gray-900">{data.BirthDate===null ? "N/A" :data.BirthDate}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -57,7 +92,7 @@ export const ViewPatientDetail=()=>{
               </div>
               <div>
                 <p className="text-sm text-gray-500">Age</p>
-                <p className="font-medium text-gray-900">19 years</p>
+                <p className="font-medium text-gray-900">{data.Age===null ? "N/A" :data.Age}</p>
               </div>
             </div>
           </div>
@@ -69,7 +104,7 @@ export const ViewPatientDetail=()=>{
               </div>
               <div>
                 <p className="text-sm text-gray-500">Phone Number</p>
-                <p className="font-medium text-gray-900">9999999</p>
+                <p className="font-medium text-gray-900">{data.MobileNo===null ? "N/A" :data.MobileNo}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -78,7 +113,7 @@ export const ViewPatientDetail=()=>{
               </div>
               <div>
                 <p className="text-sm text-gray-500">Email</p>
-                <p className="font-medium text-gray-900">@gmail.com</p>
+                <p className="font-medium text-gray-900">{data.email===null ? "N/A" :data.email}</p>
               </div>
             </div>
           </div>
@@ -92,7 +127,7 @@ export const ViewPatientDetail=()=>{
               </div>
               <div>
                 <p className="text-sm text-gray-500">Blood Group</p>
-                <p className="font-medium text-gray-900">o+</p>
+                <p className="font-medium text-gray-900">{data.BloodGroup===null ? "N/A" :data.BloodGroup}</p>
               </div>
             </div>
           </div>
@@ -104,7 +139,7 @@ export const ViewPatientDetail=()=>{
               </div>
               <div>
                 <p className="text-sm text-gray-500">Address</p>
-                <p className="font-medium text-gray-900 mt-1">nagfnnnnnnnnnnnnnnnnnnnff</p>
+                <p className="font-medium text-gray-900 mt-1">{data.BloodGroup===null ? "N/A" :data.BloodGroup}</p>
               </div>
             </div>
           </div>

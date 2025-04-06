@@ -41,6 +41,8 @@ PatientRouter.post("/signup",async(req,res)=>{
             email:email
         }
     })
+
+    console.log("exit or not",CheckedByEmail)
     
     if(CheckedByEmail){
         res.json({
@@ -77,6 +79,8 @@ PatientRouter.post("/signup",async(req,res)=>{
         userId:PutUserIntoDB.id
     },JWT_KEY);
 
+    console.log(token);
+
  
      res.cookie("userId",PutUserIntoDB.id,{httpOnly:true,secure:false});
 
@@ -84,7 +88,7 @@ PatientRouter.post("/signup",async(req,res)=>{
         httpOnly:true,
         secure:false
     })
-
+    console.log("here also")
     res.json({
         data:"OTP_Send",
         email
@@ -115,6 +119,7 @@ PatientRouter.post("/verifyotp",async(req,res)=>{
     const token=req.cookies.uidcookie;
     console.log("here");
 
+    console.log(token);
     if(!token){
         res.json({
             message:"Not_SignedIn"
@@ -124,6 +129,8 @@ PatientRouter.post("/verifyotp",async(req,res)=>{
     
     const {otp,email}=req.body;
    
+    console.log(otp);
+    console.log(email);
 
     const FindEmail=await pclient.patient.findUnique({
         where:{
@@ -164,6 +171,7 @@ PatientRouter.post("/verifyotp",async(req,res)=>{
             otp:otp
         }
     })
+    console.log("here aa gaya reh !!")
 
     res.json({
         message:"Verified!!"
@@ -259,7 +267,7 @@ PatientRouter.get("/auths",async(req,res)=>{
         })
         res.json({
             message:"authenticated",
-            userData:user
+            PatientData:user
          })
 })          
 

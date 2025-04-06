@@ -1,70 +1,57 @@
-import axios from 'axios';
+import  { useRef } from 'react';
 import { Star } from 'lucide-react';
-import { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-export const SignIn=()=>{
- const emailRef=useRef<HTMLInputElement>(null);
- const passwordRef=useRef<HTMLInputElement>(null);
+export const OTPVerify=()=>{
+    const otpref=useRef<HTMLInputElement>(null);
+    const location = useLocation();
+    const email = location.state?.email || ""; 
+    console.log("this is email from location",email);
+ 
   const navigate=useNavigate();
 
-  const handleSubmit = async() => {
-  
- const resp=await axios.post("http://localhost:3000/patient/signin",{
-    email:emailRef.current?.value,
-    password:passwordRef.current?.value
-  },{withCredentials:true}
-   )
-   if(resp.data.message==="not_found"){
-    alert("Email Not present");
-    return;
-   } else{
-    navigate("/")
+  const handleOTP=async()=>{
+  const resp=await axios.post("http://localhost:3000/patient/verifyotp",{
+        otp:otpref.current?.value,
+        email:email
+    },{withCredentials:true})
+   console.log(resp);  
+   if(resp.data.message==='Verified!!'){
+    navigate("/");
+   } else {
+    alert("Something went wrong!!!")
    }
 
-   console.log(resp);
-  };
+}
 
   return (
     <div className="min-h-screen flex">
       {/* Left Section - Sign Up Form */}
-
+      
       <div className="w-1/2 p-12 flex items-center">
         <div className="w-full max-w-md">
-          <h1 className="text-4xl font-bold mb-2">Enter Your Credentials</h1>
+          <h1 className="text-4xl font-bold mb-2">Verify Your OTP</h1>
           
-         
+        
             <div className="mb-6">
               <label className="block mb-2">
-                Email<span className="text-red-500">*</span>
+                OTP<span className="text-red-500">*</span>
               </label>
               <input
-                type="email"
-                placeholder="Enter your email"
+                placeholder="Enter your Otp"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                ref={emailRef}
+                ref={otpref}
                 required
               />
             </div>
 
-            <div className="mb-6">
-              <label className="block mb-2">
-                Password<span className="text-red-500">*</span>
-              </label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                ref={passwordRef}
-                required
-              />
-            </div>
 
-            <button  onClick={handleSubmit}
+            <button onClick={handleOTP}
               type="submit"
               className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-200"
             >
-              Continue
+              Verify
             </button>
 
             <p className="mt-6 text-center text-gray-600">

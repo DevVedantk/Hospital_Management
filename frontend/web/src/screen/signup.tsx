@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
 import { Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useRef } from 'react';
 
 export const SignUp=()=>{
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    retypePassword: '',
-    agreeToTerms: false
-  });
+  const emailRef=useRef<HTMLInputElement>(null);
+  const passwordRef=useRef<HTMLInputElement>(null);
+  const confirmPassRef=useRef<HTMLInputElement>(null);
+
+  const handlesignup=async()=>{
+    console.log("inside fn")
+      if(emailRef.current?.value==="" || passwordRef.current?.value==="" || confirmPassRef.current?.value===""){
+        alert("Enter Complete Details");
+        return;
+      }    
+    const resp=await axios.post("http://localhost:3000/patient/signup",{
+        email:emailRef.current?.value,
+        password:passwordRef.current?.value
+      },{withCredentials:true})
+
+      if(resp.data.message==="Email_exists"){
+        alert("Email Already Present")
+        return;
+      }
+
+      navigate("/opt-verify",{state:{email:emailRef.current?.value}}
+      )
+      console.log(resp);
+
+  }
 
   const navigate=useNavigate();
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-  };
 
   return (
     <div className="min-h-screen flex">
@@ -23,7 +39,6 @@ export const SignUp=()=>{
         <div className="w-full max-w-md">
           <h1 className="text-4xl font-bold mb-2">Create Your account</h1>
           
-          <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <label className="block mb-2">
                 Email<span className="text-red-500">*</span>
@@ -32,8 +47,7 @@ export const SignUp=()=>{
                 type="email"
                 placeholder="Enter your email"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                 ref={emailRef}
                 required
               />
             </div>
@@ -46,8 +60,7 @@ export const SignUp=()=>{
                 type="password"
                 placeholder="Enter your password"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                ref={passwordRef}
                 required
               />
             </div>
@@ -60,8 +73,7 @@ export const SignUp=()=>{
                 type="password"
                 placeholder="Again Enter your password"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={formData.retypePassword}
-                onChange={(e) => setFormData({ ...formData, retypePassword: e.target.value })}
+                ref={confirmPassRef}
                 required
               />
             </div>
@@ -78,22 +90,7 @@ export const SignUp=()=>{
 
             </div>
 
-            <div className="mb-6">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  checked={formData.agreeToTerms}
-                  onChange={(e) => setFormData({ ...formData, agreeToTerms: e.target.checked })}
-                  required
-                />
-                <span className="text-sm text-gray-600">
-                  By signing up, I agree to the terms and conditions, privacy policy, and cookie policy
-                </span>
-              </label>
-            </div>
-
-            <button              type="submit"
+            <button     onClick={handlesignup}          type="submit"
               className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-200"
             >
               Sign up
@@ -101,11 +98,11 @@ export const SignUp=()=>{
 
             <p className="mt-6 text-center text-gray-600">
               Already have an account? 
-              <a onClick={()=>navigate("/signin")} href="#" className="text-indigo-600 hover:underline">
+              <a onClick={()=>navigate("/signin")} className="text-indigo-600 cursor-pointer hover:underline">
                 Click Here
               </a>
             </p>
-          </form>
+          
         </div>
       </div>
 
