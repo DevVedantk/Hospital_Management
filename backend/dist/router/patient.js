@@ -233,7 +233,7 @@ exports.PatientRouter.get("/auths", (req, res) => __awaiter(void 0, void 0, void
     });
     res.json({
         message: "authenticated",
-        userData: user
+        PatientData: user
     });
 }));
 exports.PatientRouter.post("/resend", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

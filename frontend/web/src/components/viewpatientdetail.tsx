@@ -34,8 +34,10 @@ export const ViewPatientDetail=()=>{
     useEffect(()=>{
       axios.get("http://localhost:3000/patient/auths",{withCredentials:true}).then((resp)=>{
         console.log(resp);
-        setdata(resp.data.userData)
+        console.log("data aa rha ya nahi!!")
+        setdata(resp.data.PatientData)
       })
+
 
     },[])
 
