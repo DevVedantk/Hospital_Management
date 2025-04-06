@@ -17,6 +17,7 @@ export const SignIn=()=>{
   return (
     <div className="min-h-screen flex">
       {/* Left Section - Sign Up Form */}
+      
       <div className="w-1/2 p-12 flex items-center">
         <div className="w-full max-w-md">
           <h1 className="text-4xl font-bold mb-2">Enter Your Credentials</h1>
